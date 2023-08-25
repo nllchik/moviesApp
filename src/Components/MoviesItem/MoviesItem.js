@@ -4,11 +4,15 @@ import { Card, Space, Tag } from 'antd'
 import { parse, format } from 'date-fns'
 
 import './MoviesItem.css'
-import imageFilm from './image-film.png'
+import defaultImage from './image-film.png'
 
 const urlBase = 'https://image.tmdb.org/t/p/original'
 
 function MoviesItem({ title, description, date, poster }) {
+  const defaultPoster = (e) => {
+    e.target.src = defaultImage
+  }
+
   function truncateDescription(desc) {
     if (description.length <= 200) {
       return desc
@@ -20,7 +24,12 @@ function MoviesItem({ title, description, date, poster }) {
 
   return (
     <Card className="movie__item">
-      <img className="movie__poster" src={poster ? urlBase + poster : imageFilm} alt="Film Poster" />
+      <img
+        className="movie__poster"
+        src={poster ? urlBase + poster : defaultImage}
+        alt="Film Poster"
+        onError={defaultPoster}
+      />
       <div className="movie__info">
         <h2 className="movie__title">{title}</h2>
         <p className="movie__release-date">{formattedDate}</p>

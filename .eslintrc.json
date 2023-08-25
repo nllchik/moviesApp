@@ -22,7 +22,7 @@
 	},
 	"plugins": ["react", "prettier", "import"],
 	"rules": {
-	  "indent": ["error", 2],
+	  "indent": "off",
 	  "prettier/prettier": "error",
 	  "linebreak-style": [0, "unix"],
 	  "quotes": ["error", "single"],
@@ -34,9 +34,7 @@
 	  "no-plusplus": "off",
 	  "react/static-property-placement": ["error", "static public field"],
 	  "jsx-a11y/label-has-associated-control": "off",
-	  "jsx-a11y/no-autofocus": [ 2, {
-		"ignoreNonDOM": true
-  		}],
+	  "no-underscore-dangle": "off",
 	  "import/order": [
 		 2,
 		 {
@@ -57,4 +55,3 @@
 	  }
 	}
  }
- 
