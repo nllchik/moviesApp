@@ -14,10 +14,14 @@ function MoviesItem({ title, description, date, poster }) {
   }
 
   function truncateDescription(desc) {
-    if (description.length <= 200) {
+    const maxLength = 180
+
+    if (desc.length <= maxLength) {
       return desc
     }
-    const truncate = `${description.slice(0, 345)}...`
+
+    const lastSpaceIndex = desc.lastIndexOf(' ', maxLength)
+    const truncate = `${desc.slice(0, lastSpaceIndex)}...`
     return truncate
   }
   const formattedDate = date ? format(parse(date, 'yyyy-MM-dd', new Date()), 'MMMM d, yyyy') : 'Date unknown'
@@ -31,15 +35,17 @@ function MoviesItem({ title, description, date, poster }) {
         onError={defaultPoster}
       />
       <div className="movie__info">
-        <h2 className="movie__title">{title}</h2>
-        <p className="movie__release-date">{formattedDate}</p>
-        <div className="movie__tags">
-          <Space size={[0, 8]} wrap>
-            <Tag>Action</Tag>
-            <Tag>Drama</Tag>
-          </Space>
+        <div className="movie__info-content">
+          <h2 className="movie__title">{title}</h2>
+          <p className="movie__release-date">{formattedDate}</p>
+          <div className="movie__tags">
+            <Space size={[0, 8]} wrap>
+              <Tag>Action</Tag>
+              <Tag>Drama</Tag>
+            </Space>
+          </div>
+          <p className="movie__description">{truncateDescription(description) || 'No description'}</p>
         </div>
-        <p className="movie__description">{truncateDescription(description) || 'No description'}</p>
       </div>
     </Card>
   )

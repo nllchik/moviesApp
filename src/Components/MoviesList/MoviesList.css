@@ -3,15 +3,23 @@
 	grid-template-columns: 1fr 1fr;
 	grid-gap: 30px;
 	padding: 15px 30px 0 30px;
-	margin-left: auto;
-	margin-right: auto;
+	margin: 0 auto 38px auto;
 	height: 100%;
  }
 
  .main__spinner {
-	margin-top: 50vh;
+	position: absolute;
+	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
  }
 
 .ant-layout {
 	background-color: inherit;
+}
+
+.ant-pagination {
+	display: flex;
+  	justify-content: center;
+	margin-bottom: 17px;
 }

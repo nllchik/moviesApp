@@ -16,11 +16,14 @@ export default class MovieService {
     if (body.success === false) {
       throw new Error(body.status.message)
     } else {
-      return body.results
+      return {
+        results: body.results,
+        totalPages: body.total_pages,
+      }
     }
   }
 
-  async searchMovies(keyword) {
-    return this.getResource(`search/movie?query=${encodeURIComponent(keyword)}`)
+  async searchMovies(keyword, pageNumber = 1) {
+    return this.getResource(`search/movie?query=${encodeURIComponent(keyword)}&page=${pageNumber}`)
   }
 }
