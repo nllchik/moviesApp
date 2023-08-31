@@ -1,7 +1,9 @@
 export default class MovieService {
   #apiBase = 'https://api.themoviedb.org/3/'
 
-  #options = {
+  #apiKey = '33240de3655f24679e1d96684ada1349'
+
+  #getOptions = {
     method: 'GET',
     headers: {
       accept: 'application/json',
@@ -11,19 +13,86 @@ export default class MovieService {
   }
 
   async getResource(url) {
-    const response = await fetch(this.#apiBase + url, this.#options)
+    const response = await fetch(this.#apiBase + url, this.#getOptions)
     const body = await response.json()
     if (body.success === false) {
       throw new Error(body.status.message)
     } else {
       return {
+        all: body,
         results: body.results,
-        totalPages: body.total_pages,
+        totalResults: body.total_results,
       }
     }
   }
 
   async searchMovies(keyword, pageNumber = 1) {
     return this.getResource(`search/movie?query=${encodeURIComponent(keyword)}&page=${pageNumber}`)
+  }
+
+  async createGuestSession() {
+    const response = await fetch(`${this.#apiBase}authentication/guest_session/new`, this.#getOptions)
+    const body = await response.json()
+    if (body.success === false) {
+      throw new Error(body.status.message)
+    } else {
+      return body.guest_session_id
+    }
+  }
+
+  async addRating(movieId, rating, guestSessionId) {
+    const response = await fetch(
+      `${this.#apiBase}movie/${movieId}/rating?guest_session_id=${guestSessionId}&api_key=${this.#apiKey}`,
+      {
+        method: 'POST',
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify({ value: rating }),
+      }
+    )
+    const body = await response.json()
+
+    if (body.error) {
+      throw new Error(body.status.message)
+    } else {
+      return body
+    }
+  }
+
+  async getRatedMovies(guestSessionId, page = 1) {
+    const response = await fetch(
+      `${this.#apiBase}guest_session/${guestSessionId}/rated/movies?language=en-US&page=${page}&api_key=${
+        this.#apiKey
+      }`,
+      {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+        },
+      }
+    )
+    const body = await response.json()
+
+    if (body.error) {
+      throw new Error(body.status.message)
+    } else {
+      return {
+        all: body,
+        results: body.results,
+        totalRatedResults: body.total_results,
+      }
+    }
+  }
+
+  async getGenreList() {
+    const response = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', this.#getOptions)
+    const body = await response.json()
+    if (body.error) {
+      throw new Error(body.status.message)
+    } else {
+      return body.genres
+    }
   }
 }

@@ -1,5 +1,14 @@
 .ant-input {
 	max-width: 945px;
 	height: 40px;
-  	margin: 15px auto 0 auto;
+  	margin: 0 auto;
+	background-color: #ffffff;
 }
+
+@media (max-width: 768px) {
+	.ant-input {
+		display: flex;
+		justify-content: center;
+		width: 90%;
+		}
+	}

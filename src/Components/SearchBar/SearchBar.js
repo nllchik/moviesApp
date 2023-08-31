@@ -5,7 +5,7 @@ import debounce from 'lodash.debounce'
 import './SearchBar.css'
 
 export default class SearchBar extends Component {
-  debouncedSearch = debounce(() => this.executeSearch(), 500)
+  debouncedSearch = debounce(() => this.executeSearch(), 1000)
 
   constructor(props) {
     super(props)

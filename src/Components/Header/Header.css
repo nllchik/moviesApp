@@ -1,0 +1,10 @@
+.ant-layout-header {
+	background-color: #ffff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.ant-tabs {
+	display: inline-block;
+}

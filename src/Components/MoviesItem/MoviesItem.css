@@ -1,4 +1,4 @@
-.movie__item{
+.ant-card-body{
 	max-width: 455px;
  }
 .movie__item > div {
@@ -6,38 +6,138 @@
 	flex-direction: row;
 	box-shadow: 0px 4px 12px 0px #00000026;
  }
+
+ .movie__info-content {
+	display: flex;
+	flex-direction: column;
+	height: 90%;
+ }
+
  .movie__info {
 	overflow: hidden;
+	width: 100%;
  }
  .movie__poster {
 	margin-right: 20px;
 	margin-bottom: auto;
 	max-width: 183px;
 	height: 281px;
+	border-top-left-radius: 5px;
+  	border-bottom-left-radius: 5px;
+	cursor: pointer;
  }
  .movie__title {
 	font-size: 20px;
 	font-weight: 600;
-	width: 80%;
 	margin-bottom: 7px;
 	margin-top: 10px;
-	white-space: nowrap;
-  	overflow: hidden;
-  	text-overflow: ellipsis;
  }
+ .movie__title::after{
+	content: attr(data-average);
+	width: 30px;
+	height: 30px;
+	top: 10px;
+	left: 412px;
+	border: 2px solid red; /* Исправьте свойство 'border' */
+	border-radius: 50%;
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: Inter;
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 22px;
+	letter-spacing: 0px;
+	text-align: left;
+}
+
+.movie__title.averageStyle1::after{
+	border: 2px solid #E90000
+}
+.movie__title.averageStyle2::after{
+	border: 2px solid #E97E00
+}
+.movie__title.averageStyle3::after{
+	border: 2px solid #E9D100
+}
+.movie__title.averageStyle4::after{
+	border: 2px solid #66E900
+}
+
  .movie__release-date {
 	font-size: 12px;
 	color: #827e7e;
 	margin: 0 0 7px 0;
  }
- .movie__tags {
+ .ant-tag {
 	margin-bottom: 7px;
  }
  .movie__description {
 	margin: 0;
 	padding-right: 20px;
+	cursor: pointer;
+ }
+
+ .ant-card {
+	border: 0;
  }
 
  .ant-card-body {
 	padding: 0 !important;
  }
+
+ @media (max-width: 768px) {
+	.ant-card-body{
+		width: 388px;
+		height: 245px;
+		padding: 6px 10px !important;
+	 }
+
+	.movie__poster {
+		margin: 0 13px 0 0;
+		max-width: 60px;
+		height: 91px;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0px;
+	}
+
+	.movie__title::after{
+		top: 5px;
+		left: 345px;
+	}
+
+	.movie__title {
+		margin: 0;
+		padding-right: 15px;
+		margin-bottom: 7px;
+		line-height: 25px;
+	}
+
+	.movie__release-date {
+		font-size: 12px;
+		color: #827e7e;
+		margin-bottom: 9px;
+	 }
+
+	.ant-tag {
+		margin-bottom: 19px;
+	 }
+
+	.movie__description {
+		margin-top: 0;
+		height: 92px;
+		margin-left: -70px;
+		margin-right: 10px;
+		padding: 0;
+	 }
+
+	 .movie__info {
+		overflow:visible;
+	 }
+
+	 .ant-rate {
+		display: flex;
+		justify-content: end;
+	 }
+}

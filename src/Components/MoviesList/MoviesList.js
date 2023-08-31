@@ -1,6 +1,7 @@
 import React from 'react'
 import { Layout, Spin, Pagination } from 'antd'
 import { Online, Offline } from 'react-detect-offline'
+
 import './MoviesList.css'
 
 import MoviesItem from '../MoviesItem'
@@ -9,10 +10,20 @@ import NetworkError from '../NetworkError'
 
 const { Content } = Layout
 
-function MoviesList({ items, isLoading, error, errorMessage, noResults, currentPage, onPaginationChange, totalPages }) {
+function MoviesList({
+  items,
+  isLoading,
+  isRated,
+  error,
+  errorMessage,
+  currentPage,
+  currentRatePage,
+  totalRatedResults,
+  totalResults,
+  onPaginationChange,
+  guestSessionId,
+}) {
   const errorComponent = error ? <ErrorHandling errorMessage={errorMessage} /> : null
-
-  const noResultsMessage = !isLoading && noResults ? <h1>Результатов по вашему поиску нет</h1> : null
 
   const hasData = !isLoading && !error
   const content = hasData
@@ -23,15 +34,28 @@ function MoviesList({ items, isLoading, error, errorMessage, noResults, currentP
           date={item.release_date}
           title={item.title}
           poster={item.poster_path}
+          average={item.vote_average}
+          id={item.id}
+          guestSessionId={guestSessionId}
+          genreIds={item.genre_ids}
         />
       ))
     : null
 
   const spinner = isLoading ? <Spin className="main__spinner" size="large" /> : null
 
+  const currentPaginationPage = isRated ? currentRatePage : currentPage
+  const totalPaginationPage = isRated ? totalRatedResults : totalResults
+
   const pagination =
-    !isLoading && !noResults ? (
-      <Pagination current={currentPage} showSizeChanger={false} onChange={onPaginationChange} total={totalPages * 10} />
+    !isLoading && !error && items.length > 0 ? (
+      <Pagination
+        current={currentPaginationPage}
+        showSizeChanger={false}
+        onChange={onPaginationChange}
+        total={totalPaginationPage}
+        defaultPageSize={20}
+      />
     ) : null
 
   const polling = {
@@ -44,10 +68,9 @@ function MoviesList({ items, isLoading, error, errorMessage, noResults, currentP
   return (
     <Layout>
       <Online polling={polling}>
+        {errorComponent}
         <Content className="main__content">
-          {errorComponent}
           {content}
-          {noResultsMessage}
           {spinner}
         </Content>
         {pagination}
