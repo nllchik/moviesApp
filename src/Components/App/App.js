@@ -141,6 +141,17 @@ export default class App extends Component {
       })
   }
 
+  addRating = (id, value) => {
+    const { guestSessionId } = this.state
+
+    this.movieService.addRating(id, value, guestSessionId).catch((error) => {
+      this.setState({
+        error: true,
+        errorMessage: error.message,
+      })
+    })
+  }
+
   getGenreList = () => {
     this.movieService.getGenreList().then((res) => {
       const genreArray = {}
@@ -164,12 +175,11 @@ export default class App extends Component {
       currentPage,
       isRated,
       ratedItems,
-      guestSessionId,
       currentRatePage,
       totalRatedResults,
       genreList,
     } = this.state
-    const { searchMovie, onPaginationChange, toggleIsRated, rateMovie, getRatedMovies } = this
+    const { searchMovie, onPaginationChange, toggleIsRated, rateMovie, getRatedMovies, addRating } = this
 
     const moviesToDisplay = isRated ? ratedItems : items
 
@@ -191,9 +201,9 @@ export default class App extends Component {
             currentPage={currentPage}
             onPaginationChange={onPaginationChange}
             isRated={isRated}
-            guestSessionId={guestSessionId}
             currentRatePage={currentRatePage}
             totalRatedResults={totalRatedResults}
+            addRating={addRating}
           />
         </GenreProvider>
       </Layout>

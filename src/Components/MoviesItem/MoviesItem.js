@@ -7,12 +7,11 @@ import classNames from 'classnames'
 import './MoviesItem.css'
 import MoviesRate from '../MoviesRate/MoviesRate'
 import { GenreConsumer } from '../GenreContext/GenreContext'
-
-import defaultImage from './image-film.png'
+import defaultImage from '../../assets/images/image-film.png'
 
 const urlBase = 'https://image.tmdb.org/t/p/original'
 
-function MoviesItem({ title, id, description, date, poster, average, guestSessionId, genreIds }) {
+function MoviesItem({ title, id, description, date, poster, average, genreIds, addRating }) {
   const defaultPoster = (e) => {
     e.target.src = defaultImage
   }
@@ -73,7 +72,7 @@ function MoviesItem({ title, id, description, date, poster, average, guestSessio
           {tagsList}
           <p className="movie__description">{truncateDescription(description) || 'No description'}</p>
         </div>
-        <MoviesRate id={id} guestSessionId={guestSessionId} />
+        <MoviesRate id={id} addRating={addRating} />
       </div>
     </Card>
   )

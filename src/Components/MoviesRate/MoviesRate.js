@@ -1,14 +1,11 @@
 import React from 'react'
 import { Rate } from 'antd'
 
-import MovieService from '../../API/MoviesService'
-
 import './MoviesRate.css'
 
-function MoviesRate({ id, guestSessionId }) {
+function MoviesRate({ id, addRating }) {
   const onRateChange = async (value) => {
-    const movieService = new MovieService()
-    movieService.addRating(id, value, guestSessionId)
+    addRating(id, value)
     localStorage.setItem(id, value)
   }
   const getRateFromLocal = localStorage.getItem(id)

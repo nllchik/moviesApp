@@ -21,7 +21,7 @@ function MoviesList({
   totalRatedResults,
   totalResults,
   onPaginationChange,
-  guestSessionId,
+  addRating,
 }) {
   const errorComponent = error ? <ErrorHandling errorMessage={errorMessage} /> : null
 
@@ -36,8 +36,8 @@ function MoviesList({
           poster={item.poster_path}
           average={item.vote_average}
           id={item.id}
-          guestSessionId={guestSessionId}
           genreIds={item.genre_ids}
+          addRating={addRating}
         />
       ))
     : null
